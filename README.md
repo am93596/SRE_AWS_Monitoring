@@ -29,3 +29,9 @@ EC2 SNS is a notification service that can send an email or text message wheneve
 11. `Scaling policies`: Set to `Target tracking scaling policy`. Name it, set the `Metric type` to `CPU`, and set the `Target value` to `50`. Click `Next`, then click `Next` again on the next 2 pages.  
 12. Click `Create auto scaling group`.  
 ## Target Group Configuration  
+- The target group may already be configured, but if not, this can be modified as follows:  
+1. In the EC2 Console, click on `Target Groups`, and select the target group you created earlier.  
+2. Select the `Targets` tab, and click `Register targets`.  
+3. Select your instance, and click `Include as pending below`. Then click `Register pending targets`.  
+
+*When testing your Jenkins jobs, don't forget to update the ssh line for the app EC2 instance with the DNS for the instance created by the auto scaling group!*
