@@ -10,5 +10,22 @@ EC2 SNS is a notification service that can send an email or text message wheneve
 ## Create A Launch Template From An EC2 Instance
 1. In AWS EC2 Console, click `Instances`. Select the instance you want to be used for the launch template. Then select `Actions` -> `Images and templates` -> `Create template from instance`. Enter the name and description for your launch template (e.g. `sre_amy_launch_instance_app`)
 2. Click the checkbox under `Auto Scaling guidance`.
-3. Most of the rest of the details will be automatically filled in. In `Network settings`, select `VPC`, and select the security group for your instance. Some of the input boxes in `Advanced details` may be red, with recommendations for what to enter; follow those recommendations, then click `Create launch template`.
-## Create Auto Scaling Group With Load Balancer
+3. Most of the rest of the details will be automatically filled in.  
+4. In `Network settings`, select `VPC`, and select the security group for your instance.  
+5. In `Network interfaces`, select `Remove`
+6. Some of the input boxes in `Advanced details` may be red, with recommendations for what to enter; follow those recommendations, then click `Create launch template`.
+## Create Auto Scaling Group With Load Balancer  
+1. On the launch template confirmation page, click `Create Auto Scaling Group`.  
+2. Enter the name for your Auto Scaling group (e.g. `sre-amy-auto-scaling-group`).  
+3. Leave `Launch Template` details as default, and click `Next`.  
+4. Leave `Instance purchase options` as `Adhere to launch template`.  
+5. In `Network`, select the subnet that your instance is operating in, then click `Next`.  
+### Adding the Load Balancer  
+6. Select `Attach to a new load balancer`, and set the type to `Application load balancer`.  
+7. Name the load balancer - don't use underscores in the name (e.g. sre-amy-load-balancer-demo-1).  
+8. Set `Load balancer scheme` to `Internet-facing`, and select at least a second Availability Zone
+9. In `Listeners and routing`, select `Create a target group`. Tick the box for `ELB`, and `Enable group metrics collection within CloudWatch`. Click `Next`.  
+10. `Desired capacity`: `1`; `Minimum capacity`: `1`; `Maximum capacity`: `3`.  
+11. `Scaling policies`: Set to `Target tracking scaling policy`. Name it, set the `Metric type` to `CPU`, and set the `Target value` to `50`. Click `Next`, then click `Next` again on the next 2 pages.  
+12. Click `Create auto scaling group`.  
+## Target Group Configuration  
